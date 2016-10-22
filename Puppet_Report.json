@@ -1,11 +1,14 @@
 {
-  "id": 1,
-  "title": "Puppet",
-  "tags": [],
+  "id": null,
+  "title": "Puppet Report",
+  "description": "Detailed information about Puppet report metrics",
+  "tags": [
+    "Puppet"
+  ],
   "style": "dark",
   "timezone": "browser",
   "editable": true,
-  "hideControls": false,
+  "hideControls": true,
   "sharedCrosshair": true,
   "rows": [
     {
@@ -18,19 +21,19 @@
           "colorBackground": false,
           "colorValue": false,
           "colors": [
-            "rgba(245, 54, 54, 0.9)",
+            "rgba(50, 172, 45, 0.97)",
             "rgba(237, 129, 40, 0.89)",
-            "rgba(50, 172, 45, 0.97)"
+            "rgba(245, 54, 54, 0.9)"
           ],
-          "datasource": null,
+          "datasource": "Prometheus",
           "decimals": null,
           "editable": true,
           "error": false,
           "format": "s",
           "gauge": {
-            "maxValue": 1800,
+            "maxValue": 1860,
             "minValue": 0,
-            "show": false,
+            "show": true,
             "thresholdLabels": false,
             "thresholdMarkers": false
           },
@@ -53,8 +56,8 @@
           "maxDataPoints": 100,
           "nullPointMode": "connected",
           "nullText": null,
-          "postfix": " ago",
-          "postfixFontSize": "80%",
+          "postfix": "",
+          "postfixFontSize": "70%",
           "prefix": "",
           "prefixFontSize": "50%",
           "rangeMaps": [
@@ -64,7 +67,7 @@
               "to": "null"
             }
           ],
-          "span": 4,
+          "span": 2,
           "sparkline": {
             "fillColor": "rgba(31, 118, 189, 0.18)",
             "full": false,
@@ -73,7 +76,7 @@
           },
           "targets": [
             {
-              "expr": "time()-max(puppet_report{host=\"$host\"})/1000",
+              "expr": "time()-puppet_report{host=\"$host\",environment=\"$environment\"}/1000 > -1",
               "hide": false,
               "intervalFactor": 2,
               "legendFormat": "",
@@ -81,8 +84,8 @@
               "step": 240
             }
           ],
-          "thresholds": "",
-          "title": "Last Puppet Run",
+          "thresholds": "1800,1880",
+          "title": "Time since last report",
           "transparent": false,
           "type": "singlestat",
           "valueFontSize": "80%",
@@ -104,7 +107,7 @@
             "rgba(237, 129, 40, 0.89)",
             "rgba(50, 172, 45, 0.97)"
           ],
-          "datasource": null,
+          "datasource": "Prometheus",
           "editable": true,
           "error": false,
           "format": "none",
@@ -153,7 +156,7 @@
           },
           "targets": [
             {
-              "expr": "label_replace(puppet_report_events{host=\"$host\",name=\"Total\"} * on (transaction_uuid) group_left clamp_max(topk(1, puppet_report{host=\"$host\"}),1), \"transaction_uuid\", \"\", \"transation_uuid\", \".*\")",
+              "expr": "puppet_report_events{host=\"$host\",environment=\"$environment\",name=\"Total\"} > -1",
               "intervalFactor": 2,
               "legendFormat": "{{name}}",
               "metric": "puppet_report_events",
@@ -183,7 +186,7 @@
             "rgba(237, 129, 40, 0.89)",
             "rgba(245, 54, 54, 0.9)"
           ],
-          "datasource": null,
+          "datasource": "Prometheus",
           "editable": true,
           "error": false,
           "format": "none",
@@ -232,7 +235,7 @@
           },
           "targets": [
             {
-              "expr": "label_replace(puppet_report_events{name=\"Failure\",host=\"$host\"} * on (transaction_uuid) group_left clamp_max(topk(1, puppet_report{host=\"$host\"}),1), \"transaction_uuid\", \"\", \"transation_uuid\", \".*\")",
+              "expr": "puppet_report_events{name=\"Failure\",host=\"$host\",environment=\"$environment\"} > -1",
               "intervalFactor": 2,
               "legendFormat": "{{name}}",
               "metric": "puppet_report_events",
@@ -262,7 +265,7 @@
             "rgba(237, 129, 40, 0.89)",
             "rgba(50, 172, 45, 0.97)"
           ],
-          "datasource": null,
+          "datasource": "Prometheus",
           "editable": true,
           "error": false,
           "format": "none",
@@ -311,7 +314,7 @@
           },
           "targets": [
             {
-              "expr": "label_replace(puppet_report_events{name=\"Success\",host=\"$host\"} * on (transaction_uuid) group_left clamp_max(topk(1, puppet_report{host=\"$host\"}),1), \"transaction_uuid\", \"\", \"transation_uuid\", \".*\")",
+              "expr": "puppet_report_events{host=\"$host\",environment=\"$environment\",name=\"Success\"} > -1",
               "intervalFactor": 2,
               "legendFormat": "{{name}}",
               "metric": "puppet_report_events",
@@ -341,7 +344,7 @@
             "rgba(237, 129, 40, 0.89)",
             "rgb(0, 0, 0)"
           ],
-          "datasource": null,
+          "datasource": "Prometheus",
           "editable": true,
           "error": false,
           "format": "none",
@@ -390,7 +393,7 @@
           },
           "targets": [
             {
-              "expr": "label_replace(puppet_report_resources{name=\"Total\",host=\"$host\"} * on (transaction_uuid) group_left clamp_max(topk(1, puppet_report{host=\"$host\"}),1), \"transaction_uuid\", \"\", \"transation_uuid\", \".*\")",
+              "expr": "puppet_report_resources{name=\"Total\",host=\"$host\",environment=\"$environment\"} > -1",
               "intervalFactor": 2,
               "legendFormat": "{{name}}",
               "metric": "puppet_report_events",
@@ -410,9 +413,88 @@
             }
           ],
           "valueName": "current"
+        },
+        {
+          "cacheTimeout": null,
+          "colorBackground": false,
+          "colorValue": true,
+          "colors": [
+            "rgb(0, 0, 0)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "datasource": "Prometheus",
+          "editable": true,
+          "error": false,
+          "format": "none",
+          "gauge": {
+            "maxValue": 100,
+            "minValue": 0,
+            "show": false,
+            "thresholdLabels": false,
+            "thresholdMarkers": true
+          },
+          "id": 12,
+          "interval": null,
+          "isNew": true,
+          "links": [],
+          "mappingType": 1,
+          "mappingTypes": [
+            {
+              "name": "value to text",
+              "value": 1
+            },
+            {
+              "name": "range to text",
+              "value": 2
+            }
+          ],
+          "maxDataPoints": 100,
+          "nullPointMode": "connected",
+          "nullText": null,
+          "postfix": "",
+          "postfixFontSize": "50%",
+          "prefix": "",
+          "prefixFontSize": "50%",
+          "rangeMaps": [
+            {
+              "from": "null",
+              "text": "N/A",
+              "to": "null"
+            }
+          ],
+          "span": 2,
+          "sparkline": {
+            "fillColor": "rgba(31, 118, 189, 0.18)",
+            "full": false,
+            "lineColor": "rgb(31, 120, 193)",
+            "show": true
+          },
+          "targets": [
+            {
+              "expr": "puppet_report_changes{host=\"$host\",environment=\"$environment\"}",
+              "intervalFactor": 2,
+              "metric": "puppet_report_changes",
+              "refId": "A",
+              "step": 240
+            }
+          ],
+          "thresholds": "1",
+          "title": "Changes",
+          "type": "singlestat",
+          "valueFontSize": "80%",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "current"
         }
       ],
-      "title": "Row"
+      "showTitle": true,
+      "title": "Last Puppet Report"
     },
     {
       "collapse": false,
@@ -430,10 +512,11 @@
             "Total": "#82B5D8"
           },
           "bars": true,
-          "datasource": null,
+          "datasource": "Prometheus",
           "editable": true,
           "error": false,
           "fill": 10,
+          "hideTimeOverride": false,
           "id": 11,
           "isNew": true,
           "legend": {
@@ -464,7 +547,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "topk(7,label_replace(puppet_report_time{host=\"$host\"} * on (transaction_uuid) group_left clamp_max(topk(1, puppet_report{host=\"$host\"}),1), \"transaction_uuid\", \"\", \"transation_uuid\", \".*\"))",
+              "expr": "topk(7,puppet_report_time{host=\"$host\",environment=\"$environment\"} > - 1)",
               "interval": "",
               "intervalFactor": 2,
               "legendFormat": "{{name}}",
@@ -479,7 +562,7 @@
           "tooltip": {
             "msResolution": false,
             "shared": false,
-            "sort": 0,
+            "sort": 1,
             "value_type": "individual"
           },
           "type": "graph",
@@ -508,8 +591,7 @@
               "min": "0",
               "show": true
             }
-          ],
-          "hideTimeOverride": false
+          ]
         },
         {
           "aliasColors": {
@@ -522,7 +604,7 @@
             "Total": "#82B5D8"
           },
           "bars": true,
-          "datasource": null,
+          "datasource": "Prometheus",
           "editable": true,
           "error": false,
           "fill": 10,
@@ -556,7 +638,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "label_replace(puppet_report_resources{host=\"$host\"} * on (transaction_uuid) group_left clamp_max(topk(1, puppet_report{host=\"$host\"}),1), \"transaction_uuid\", \"\", \"transation_uuid\", \".*\")",
+              "expr": "puppet_report_resources{host=\"$host\",environment=\"$environment\"} > -1",
               "interval": "",
               "intervalFactor": 2,
               "legendFormat": "{{name}}",
@@ -606,10 +688,9 @@
       "title": "New row"
     },
     {
-      "title": "New row",
-      "height": "250px",
-      "editable": true,
       "collapse": false,
+      "editable": true,
+      "height": "250px",
       "panels": [
         {
           "aliasColors": {
@@ -622,7 +703,7 @@
             "Total": "#82B5D8"
           },
           "bars": false,
-          "datasource": null,
+          "datasource": "Prometheus",
           "editable": true,
           "error": false,
           "fill": 1,
@@ -661,13 +742,13 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "label_replace(puppet_report_time{host=\"$host\",name=~\"Config retrieval|Total\"} * on (transaction_uuid) group_left clamp_max(topk(1, puppet_report{host=\"$host\"}),1), \"transaction_uuid\", \"\", \"transation_uuid\", \".*\")",
+              "expr": "puppet_report_time{name=~\"Config retrieval|Total\",host=\"$host\",environment=\"$environment\"} > -1",
               "interval": "",
               "intervalFactor": 2,
               "legendFormat": "{{name}}",
+              "metric": "",
               "refId": "A",
-              "step": 20,
-              "metric": ""
+              "step": 20
             }
           ],
           "thresholds": [],
@@ -719,7 +800,7 @@
             "Total": "#82B5D8"
           },
           "bars": false,
-          "datasource": null,
+          "datasource": "Prometheus",
           "editable": true,
           "error": false,
           "fill": 10,
@@ -760,7 +841,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "label_replace(puppet_report_resources{host=\"$host\"} * on (transaction_uuid) group_left clamp_max(topk(1, puppet_report{host=\"$host\"}),1), \"transaction_uuid\", \"\", \"transation_uuid\", \".*\")",
+              "expr": "puppet_report_resources{host=\"$host\",environment=\"$environment\"} > -1",
               "interval": "",
               "intervalFactor": 2,
               "legendFormat": "{{name}}",
@@ -806,7 +887,9 @@
             }
           ]
         }
-      ]
+      ],
+      "title": "Puppet Reports over time",
+      "showTitle": true
     }
   ],
   "time": {
@@ -842,25 +925,33 @@
     "list": [
       {
         "allValue": null,
-        "current": {
-          "text": "fna061.ant.nmhn.lab",
-          "value": "fna061.ant.nmhn.lab",
-          "tags": []
-        },
+        "current": {},
         "datasource": "Prometheus",
         "hide": 0,
         "includeAll": false,
         "label": "Host",
         "multi": false,
         "name": "host",
-        "options": [
-          {
-            "text": "fna061.ant.nmhn.lab",
-            "value": "fna061.ant.nmhn.lab",
-            "selected": true
-          }
-        ],
+        "options": [],
         "query": "label_values(puppet_report, host)",
+        "refresh": 1,
+        "regex": "",
+        "sort": 0,
+        "tagValuesQuery": null,
+        "tagsQuery": null,
+        "type": "query"
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "Prometheus",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Environment",
+        "multi": false,
+        "name": "environment",
+        "options": [],
+        "query": "label_values(puppet_report, environment)",
         "refresh": 1,
         "regex": "",
         "sort": 0,
@@ -875,7 +966,7 @@
   },
   "refresh": false,
   "schemaVersion": 13,
-  "version": 24,
+  "version": 34,
   "links": [],
-  "gnetId": null
+  "gnetId": 700
 }
