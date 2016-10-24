@@ -76,7 +76,7 @@
           },
           "targets": [
             {
-              "expr": "time()-puppet_report{host=\"$host\",environment=\"$environment\"}/1000 > -1",
+              "expr": "time()-puppet_report{host=\"$host\",environment=\"$environment\"}/1000",
               "hide": false,
               "intervalFactor": 2,
               "legendFormat": "",
@@ -103,8 +103,8 @@
           "colorBackground": false,
           "colorValue": true,
           "colors": [
-            "rgb(0, 0, 0)",
-            "rgba(237, 129, 40, 0.89)",
+            "rgba(245, 54, 54, 0.9)",
+            "#555",
             "rgba(50, 172, 45, 0.97)"
           ],
           "datasource": "Prometheus",
@@ -156,7 +156,7 @@
           },
           "targets": [
             {
-              "expr": "puppet_report_events{host=\"$host\",environment=\"$environment\",name=\"Total\"} > -1",
+              "expr": "puppet_report_events{host=\"$host\",environment=\"$environment\",name=\"Total\"}",
               "intervalFactor": 2,
               "legendFormat": "{{name}}",
               "metric": "puppet_report_events",
@@ -164,7 +164,7 @@
               "step": 240
             }
           ],
-          "thresholds": "1,1",
+          "thresholds": "0,1,2",
           "title": "Total of Events",
           "type": "singlestat",
           "valueFontSize": "80%",
@@ -173,6 +173,11 @@
               "op": "=",
               "text": "N/A",
               "value": "null"
+            },
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "-1"
             }
           ],
           "valueName": "current"
@@ -182,8 +187,8 @@
           "colorBackground": false,
           "colorValue": true,
           "colors": [
-            "rgb(0, 0, 0)",
-            "rgba(237, 129, 40, 0.89)",
+            "rgba(245, 54, 54, 0.9)",
+            "#555",
             "rgba(245, 54, 54, 0.9)"
           ],
           "datasource": "Prometheus",
@@ -230,12 +235,12 @@
           "sparkline": {
             "fillColor": "rgba(245, 54, 54, 0.10)",
             "full": false,
-            "lineColor": "rgb(245, 54, 54,0.50)",
+            "lineColor": "rgba(245, 54, 54, 0.50)",
             "show": true
           },
           "targets": [
             {
-              "expr": "puppet_report_events{name=\"Failure\",host=\"$host\",environment=\"$environment\"} > -1",
+              "expr": "puppet_report_events{name=\"Failure\",host=\"$host\",environment=\"$environment\"}",
               "intervalFactor": 2,
               "legendFormat": "{{name}}",
               "metric": "puppet_report_events",
@@ -243,7 +248,7 @@
               "step": 240
             }
           ],
-          "thresholds": "1,1",
+          "thresholds": "0,1,2",
           "title": "Failure",
           "type": "singlestat",
           "valueFontSize": "80%",
@@ -252,6 +257,11 @@
               "op": "=",
               "text": "N/A",
               "value": "null"
+            },
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "-1"
             }
           ],
           "valueName": "current"
@@ -261,8 +271,8 @@
           "colorBackground": false,
           "colorValue": true,
           "colors": [
-            "rgb(0, 0, 0)",
-            "rgba(237, 129, 40, 0.89)",
+            "rgba(245, 54, 54, 0.9)",
+            "#555",
             "rgba(50, 172, 45, 0.97)"
           ],
           "datasource": "Prometheus",
@@ -314,7 +324,7 @@
           },
           "targets": [
             {
-              "expr": "puppet_report_events{host=\"$host\",environment=\"$environment\",name=\"Success\"} > -1",
+              "expr": "puppet_report_events{host=\"$host\",environment=\"$environment\",name=\"Success\"}",
               "intervalFactor": 2,
               "legendFormat": "{{name}}",
               "metric": "puppet_report_events",
@@ -322,7 +332,7 @@
               "step": 240
             }
           ],
-          "thresholds": "1,1",
+          "thresholds": "0,1,2",
           "title": "Successful",
           "type": "singlestat",
           "valueFontSize": "80%",
@@ -331,6 +341,11 @@
               "op": "=",
               "text": "N/A",
               "value": "null"
+            },
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "-1"
             }
           ],
           "valueName": "current"
@@ -340,9 +355,9 @@
           "colorBackground": false,
           "colorValue": true,
           "colors": [
-            "rgba(172, 45, 45, 0.97)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgb(0, 0, 0)"
+            "rgba(245, 54, 54, 0.9)",
+            "#555",
+            "#555"
           ],
           "datasource": "Prometheus",
           "editable": true,
@@ -393,7 +408,7 @@
           },
           "targets": [
             {
-              "expr": "puppet_report_resources{name=\"Total\",host=\"$host\",environment=\"$environment\"} > -1",
+              "expr": "puppet_report_resources{name=\"Total\",host=\"$host\",environment=\"$environment\"}",
               "intervalFactor": 2,
               "legendFormat": "{{name}}",
               "metric": "puppet_report_events",
@@ -401,15 +416,20 @@
               "step": 240
             }
           ],
-          "thresholds": "1,1",
+          "thresholds": "1,1,1",
           "title": "Resources",
           "type": "singlestat",
           "valueFontSize": "80%",
           "valueMaps": [
             {
               "op": "=",
-              "text": "0",
+              "text": "N/A",
               "value": "null"
+            },
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "-1"
             }
           ],
           "valueName": "current"
@@ -419,8 +439,8 @@
           "colorBackground": false,
           "colorValue": true,
           "colors": [
-            "rgb(0, 0, 0)",
-            "rgba(237, 129, 40, 0.89)",
+            "rgba(245, 54, 54, 0.9)",
+            "#555",
             "rgba(50, 172, 45, 0.97)"
           ],
           "datasource": "Prometheus",
@@ -479,7 +499,7 @@
               "step": 240
             }
           ],
-          "thresholds": "1",
+          "thresholds": "0,1,2",
           "title": "Changes",
           "type": "singlestat",
           "valueFontSize": "80%",
@@ -488,6 +508,11 @@
               "op": "=",
               "text": "N/A",
               "value": "null"
+            },
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "-1"
             }
           ],
           "valueName": "current"
