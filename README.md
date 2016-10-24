@@ -1,5 +1,7 @@
 # Grafana Puppet dashboards (Prometheus datasource)
 
+[![Build Status](https://travis-ci.org/voxpupuli/grafana-dashboards-puppet-prometheus.svg?branch=master)](https://travis-ci.org/voxpupuli/grafana-dashboards-puppet-prometheus)
+
 This repository contains a [Grafana](http://grafana.org/) dashboard that can be
 used for monitoring Puppet reports metrics.
 
