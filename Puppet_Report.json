@@ -961,7 +961,7 @@
         "query": "label_values(puppet_report, host)",
         "refresh": 1,
         "regex": "",
-        "sort": 0,
+        "sort": 1,
         "tagValuesQuery": null,
         "tagsQuery": null,
         "type": "query"
